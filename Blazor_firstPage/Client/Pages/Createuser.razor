@@ -1,0 +1,39 @@
+﻿@page "/createUser"
+@using Blazor_firstPage.Shared
+@using System.Net.Http.Json
+@inject HttpClient Http
+
+<h1>Create User</h1>
+<form method="post">
+    <div>
+        <label for="Id">ID:</label>
+        <input type="text" id="Id" @bind="user.Id" />
+    </div>
+
+    <div>
+        <label for="FirstName">First Name:</label>
+        <input type="text" id="FirstName" @bind="user.Name" />
+    </div>
+
+    <div>
+        <label for="Email">Email:</label>
+        <input type="text" id="Email" @bind="user.Email" />
+    </div>
+
+    <div>
+        <button type="submit">Create</button>
+    </div>
+</form>
+
+
+
+@code {
+    private User user = new User(); // Initialize an empty user object
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Send the user object to the server to create a new user
+        user = await Http.GetFromJsonAsync<User>("UserService");
+       
+    }
+}
