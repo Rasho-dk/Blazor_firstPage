@@ -1,9 +1,12 @@
 ﻿using Blazor_firstPage.Server.Service.UserService;
 using Blazor_firstPage.Shared;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Blazor_firstPage.Server.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class CreateUser : ControllerBase
     {
         [BindProperty]
@@ -18,7 +21,12 @@ namespace Blazor_firstPage.Server.Controllers
             this.userService = userService;
             this._logger = _logger;
         }
+        [HttpGet]
+        public IActionResult OnGet()
+        {
+            return RedirectToPage("UserPages/Createuser");
 
+        }
  
         [HttpPost("CreateUser")]
         public IActionResult OnPost()
@@ -26,7 +34,7 @@ namespace Blazor_firstPage.Server.Controllers
             
                 //Users.Add(user);
                 userService.AddUser(new Shared.User(User.Id,User.Name,User.Email));
-                return RedirectToPage("/ShowUser");
+                return RedirectToPage("ShowUser");
             
         }
 
