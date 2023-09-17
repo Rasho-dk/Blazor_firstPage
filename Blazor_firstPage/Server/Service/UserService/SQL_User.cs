@@ -11,16 +11,18 @@ namespace Blazor_firstPage.Server.Service.UserService
         {
             string sql = "SELECT * FROM Customer";
             List<User> users = new List<User>();
+
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                SqlCommand command = new SqlCommand(sql, connection);
                 connection.Open();
+                SqlCommand command = new SqlCommand(sql, connection);
+
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
                         User user = new User();
-                        user.Id = Convert.ToInt32(reader[+0]);
+                        user.Id = Convert.ToInt32(reader[0]);
                         user.Name = Convert.ToString(reader[1]);
                         user.Email = Convert.ToString(reader[2]);
 
